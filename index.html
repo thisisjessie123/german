@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stimmt! 1 - Year 7 German Review</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .progress-overview {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .progress-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .progress-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .progress-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .tab-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn.active {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .exercise-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4ecdc4;
+        }
+
+        .exercise-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .word-card {
+            display: inline-block;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .word-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        .word-card.selected {
+            background: linear-gradient(45deg, #ff6b6b, #ff9a56);
+        }
+
+        .word-card.matched {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .word-card.wrong {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .input-area {
+            margin: 20px 0;
+        }
+
+        .input-area input, .input-area textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-area input:focus, .input-area textarea:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn.selected {
+            background: linear-gradient(45deg, #ff6b6b, #ff9a56);
+        }
+
+        .score {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4ecdc4;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .reading-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .listening-text {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .voice-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .mic-btn {
+            background: #dc3545;
+            font-size: 18px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mic-btn.listening {
+            background: #28a745;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .question-counter {
+            background: #4ecdc4;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .timer {
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .choice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .choice-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .choice-item:hover {
+            border-color: #4ecdc4;
+            background: #f0fcff;
+        }
+
+        .choice-item.selected {
+            border-color: #4ecdc4;
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Stimmt! 1 German Review 🇩🇪</h1>
+            <p>Year 7 Comprehensive Practice - Complete in about 15 minutes</p>
+        </div>
+
+        <div class="progress-overview">
+            <div class="progress-item">
+                <div class="progress-number" id="total-score">0</div>
+                <div class="progress-label">Total Score</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-number" id="total-questions">0</div>
+                <div class="progress-label">Completed</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-number" id="time-spent">0</div>
+                <div class="progress-label">Time (min)</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-number" id="accuracy">0%</div>
+                <div class="progress-label">Accuracy</div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('reading')">📖 Reading (15 questions)</button>
+            <button class="tab-btn" onclick="switchTab('writing')">✍️ Writing (12 questions)</button>
+            <button class="tab-btn" onclick="switchTab('listening')">👂 Listening (10 questions)</button>
+            <button class="tab-btn" onclick="switchTab('speaking')">🗣️ Speaking (8 questions)</button>
+        </div>
+
+        <!-- Reading Practice -->
+        <div id="reading" class="tab-content active">
+            <div class="exercise-card">
+                <div class="exercise-title">
+                    <span class="question-counter" id="reading-counter">Question 1 / 15</span>
+                    Vocabulary Matching
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="reading-progress"></div>
+                    </div>
+                </div>
+                <div id="reading-exercise">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="score" id="reading-score">Score: 0/15</div>
+                <div id="reading-feedback"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="nextReadingQuestion()">Next Question</button>
+                    <button class="btn" onclick="resetReading()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Writing Practice -->
+        <div id="writing" class="tab-content">
+            <div class="exercise-card">
+                <div class="exercise-title">
+                    <span class="question-counter" id="writing-counter">Question 1 / 12</span>
+                    Spelling & Grammar
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="writing-progress"></div>
+                    </div>
+                </div>
+                <div id="writing-exercise">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="score" id="writing-score">Score: 0/12</div>
+                <div id="writing-feedback"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="checkWritingAnswer()">Check Answer</button>
+                    <button class="btn" onclick="nextWritingQuestion()">Next Question</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listening Practice -->
+        <div id="listening" class="tab-content">
+            <div class="exercise-card">
+                <div class="exercise-title">
+                    <span class="question-counter" id="listening-counter">Question 1 / 10</span>
+                    Listening Comprehension
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="listening-progress"></div>
+                    </div>
+                </div>
+                <div id="listening-exercise">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="score" id="listening-score">Score: 0/10</div>
+                <div id="listening-feedback"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="checkListeningAnswer()">Confirm Answer</button>
+                    <button class="btn" onclick="nextListeningQuestion()">Next Question</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speaking Practice -->
+        <div id="speaking" class="tab-content">
+            <div class="exercise-card">
+                <div class="exercise-title">
+                    <span class="question-counter" id="speaking-counter">Question 1 / 8</span>
+                    Speaking Practice
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="speaking-progress"></div>
+                    </div>
+                </div>
+                <div id="speaking-exercise">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+                <div class="score" id="speaking-score">Score: 0/8</div>
+                <div id="speaking-feedback"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="nextSpeakingQuestion()">Next Question</button>
+                    <button class="btn" onclick="resetSpeaking()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Full year vocabulary database
+        const allVocabulary = [
+            {german: 'Hallo', chinese: 'Hello', topic: 'Greetings'},
+            {german: 'Guten Tag', chinese: 'Good day', topic: 'Greetings'},
+            {german: 'Wie heißt du?', chinese: 'What is your name?', topic: 'Introduction'},
+            {german: 'Ich heiße', chinese: 'My name is', topic: 'Introduction'},
+            {german: 'Wie geht\'s?', chinese: 'How are you?', topic: 'Introduction'},
+            {german: 'Gut', chinese: 'Good', topic: 'Introduction'},
+            {german: 'Tschüs', chinese: 'Bye', topic: 'Greetings'},
+            {german: 'Jahre alt', chinese: 'years old', topic: 'Introduction'},
+            {german: 'Ich bin', chinese: 'I am', topic: 'Introduction'},
+            {german: 'Wo wohnst du?', chinese: 'Where do you live?', topic: 'Introduction'},
+            {german: 'Deutschland', chinese: 'Germany', topic: 'Countries'},
+            {german: 'England', chinese: 'England', topic: 'Countries'},
+            {german: 'Familie', chinese: 'Family', topic: 'Family'},
+            {german: 'Mutter', chinese: 'Mother', topic: 'Family'},
+            {german: 'Vater', chinese: 'Father', topic: 'Family'},
+            {german: 'Bruder', chinese: 'Brother', topic: 'Family'},
+            {german: 'Schwester', chinese: 'Sister', topic: 'Family'},
+            {german: 'Großeltern', chinese: 'Grandparents', topic: 'Family'},
+            {german: 'Hund', chinese: 'Dog', topic: 'Pets'},
+            {german: 'Katze', chinese: 'Cat', topic: 'Pets'},
+            {german: 'Basketball', chinese: 'Basketball', topic: 'Sports'},
+            {german: 'Fußball', chinese: 'Football', topic: 'Sports'},
+            {german: 'schwimmen', chinese: 'to swim', topic: 'Sports'},
+            {german: 'Musik hören', chinese: 'to listen to music', topic: 'Hobbies'},
+            {german: 'lesen', chinese: 'to read', topic: 'Hobbies'},
+            {german: 'Deutsch', chinese: 'German', topic: 'School'},
+            {german: 'Mathe', chinese: 'Mathematics', topic: 'School'},
+            {german: 'Sport', chinese: 'PE/Sports', topic: 'School'},
+            {german: 'Schule', chinese: 'School', topic: 'School'},
+            {german: 'Lehrer', chinese: 'Teacher', topic: 'School'},
+            {german: 'Bahnhof', chinese: 'Train station', topic: 'City'},
+            {german: 'Kino', chinese: 'Cinema', topic: 'City'},
+            {german: 'Restaurant', chinese: 'Restaurant', topic: 'City'},
+            {german: 'Museum', chinese: 'Museum', topic: 'City'}
+        ];
+
+        // Grammar questions bank
+        const grammarQuestions = [
+            {
+                question: "Ich _____ 14 Jahre alt.",
+                answer: "bin",
+                options: ["bin", "bist", "ist"],
+                explanation: "Use 'bin' with 'ich'"
+            },
+            {
+                question: "_____ du Geschwister?",
+                answer: "Hast",
+                options: ["Hast", "Habe", "Hat"],
+                explanation: "Use 'hast' with 'du'"
+            },
+            {
+                question: "Mein Bruder _____ 10 Jahre alt.",
+                answer: "ist",
+                options: ["bin", "bist", "ist"],
+                explanation: "Use 'ist' with 'er'"
+            },
+            {
+                question: "Ich _____ gern Basketball.",
+                answer: "spiele",
+                options: ["spiele", "spielst", "spielt"],
+                explanation: "Use 'spiele' with 'ich'"
+            },
+            {
+                question: "Ich mag Deutsch, _____ es interessant ist.",
+                answer: "weil",
+                options: ["weil", "und", "aber"],
+                explanation: "Use 'weil' for 'because'"
+            },
+            {
+                question: "_____ wirst du in den Ferien machen?",
+                answer: "Was",
+                options: ["Was", "Wo", "Wann"],
+                explanation: "Use 'Was' to ask 'what'"
+            }
+        ];
+
+        // Listening questions (long sentences and dialogues)
+        const listeningQuestions = [
+            {
+                type: "long_sentence",
+                audio: "Hallo, ich heiße Maria und bin dreizehn Jahre alt. Ich wohne in München mit meiner Familie.",
+                question: "Where does Maria live?",
+                options: ["München", "Berlin", "Hamburg"],
+                answer: 0
+            },
+            {
+                type: "dialogue",
+                audio: "Anna: Hallo! Wie heißt du? Tom: Ich heiße Tom. Wie alt bist du? Anna: Ich bin vierzehn Jahre alt.",
+                question: "How old is Anna?",
+                options: ["13 years old", "14 years old", "15 years old"],
+                answer: 1
+            },
+            {
+                type: "paragraph",
+                audio: "Meine Familie ist groß. Ich habe eine Mutter, einen Vater, zwei Brüder und eine Schwester. Wir haben auch einen Hund. Er heißt Max und ist sehr freundlich.",
+                question: "How many siblings does he/she have?",
+                options: ["two", "three", "four"],
+                answer: 1
+            },
+            {
+                type: "long_sentence",
+                audio: "In meiner Freizeit spiele ich gern Basketball und höre Musik. Am Wochenende gehe ich oft ins Kino.",
+                question: "What does he/she do on weekends?",
+                options: ["play basketball", "go to cinema", "listen to music"],
+                answer: 1
+            },
+            {
+                type: "dialogue",
+                audio: "Lehrer: Was ist dein Lieblingsfach? Schüler: Mein Lieblingsfach ist Sport, weil es Spaß macht. Lehrer: Magst du auch Deutsch? Schüler: Ja, Deutsch ist auch interessant.",
+                question: "Why does the student like sports?",
+                options: ["because it's easy", "because it's fun", "because it's important"],
+                answer: 1
+            },
+            {
+                type: "paragraph",
+                audio: "Morgen werde ich nach Berlin fahren. Dort möchte ich das Museum besuchen und deutsche Bratwurst essen. Berlin ist eine sehr interessante Stadt.",
+                question: "What does he/she want to eat in Berlin?",
+                options: ["Pizza", "Bratwurst", "Hamburger"],
+                answer: 1
+            },
+            {
+                type: "long_sentence",
+                audio: "Mein Deutschlehrer ist sehr freundlich und hilfsbereit. Er erklärt die Grammatik immer sehr gut.",
+                question: "How is the German teacher?",
+                options: ["strict", "friendly", "funny"],
+                answer: 1
+            },
+            {
+                type: "dialogue",
+                audio: "Mutter: Hast du Hausaufgaben? Kind: Ja, ich muss Deutsch und Mathe machen. Mutter: Wann machst du sie? Kind: Nach dem Abendessen.",
+                question: "When does the child do homework?",
+                options: ["before dinner", "after dinner", "in the morning"],
+                answer: 1
+            },
+            {
+                type: "paragraph",
+                audio: "Unser Klassenzimmer ist groß und hell. Es gibt zwanzig Tische, vierzig Stühle und ein Whiteboard. An der Wand hängen viele Poster.",
+                question: "How many chairs are there?",
+                options: ["twenty", "thirty", "forty"],
+                answer: 2
+            },
+            {
+                type: "long_sentence",
+                audio: "Am Samstag gehe ich mit meinen Freunden in die Stadt. Wir werden einkaufen und dann ins Café gehen.",
+                question: "Who does he/she go to town with?",
+                options: ["with family", "with friends", "alone"],
+                answer: 1
+            }
+        ];
+
+        // Speaking practice questions
+        const speakingQuestions = [
+            {
+                type: "self_introduction",
+                prompt: "Introduce yourself in German (name, age, where you live)",
+                example: "Hallo, ich heiße [Name]. Ich bin [Age] Jahre alt und wohne in [City].",
+                keywords: ["heiße", "Jahre alt", "wohne"]
+            },
+            {
+                type: "family",
+                prompt: "Describe your family members",
+                example: "Ich habe eine Mutter, einen Vater und einen Bruder.",
+                keywords: ["Familie", "Mutter", "Vater", "Bruder", "Schwester"]
+            },
+            {
+                type: "hobbies",
+                prompt: "Talk about your hobbies",
+                example: "Ich spiele gern Basketball und höre Musik.",
+                keywords: ["spiele", "gern", "höre", "Musik"]
+            },
+            {
+                type: "school",
+                prompt: "Talk about your favourite school subject",
+                example: "Mein Lieblingsfach ist Deutsch, weil es interessant ist.",
+                keywords: ["Lieblingsfach", "weil", "interessant"]
+            },
+            {
+                type: "pets",
+                prompt: "Describe pets",
+                example: "Ich habe einen Hund. Er ist groß und freundlich.",
+                keywords: ["Hund", "Katze", "groß", "freundlich"]
+            },
+            {
+                type: "daily_routine",
+                prompt: "Talk about your daily activities",
+                example: "Ich gehe zur Schule und mache Sport.",
+                keywords: ["gehe", "Schule", "mache", "Sport"]
+            },
+            {
+                type: "future_plans",
+                prompt: "Talk about your plans",
+                example: "Ich werde nach Deutschland fahren.",
+                keywords: ["werde", "fahren", "Deutschland"]
+            },
+            {
+                type: "preferences",
+                prompt: "Express your preferences",
+                example: "Ich mag Basketball, aber ich mag nicht Fußball.",
+                keywords: ["mag", "nicht", "aber"]
+            }
+        ];
+
+        // Current status
+        let currentTab = 'reading';
+        let scores = {reading: 0, writing: 0, listening: 0, speaking: 0};
+        let currentQuestions = {reading: 0, writing: 0, listening: 0, speaking: 0};
+        let totalQuestions = {reading: 15, writing: 12, listening: 10, speaking: 8};
+        let startTime = Date.now();
+        let selectedAnswer = null;
+
+        // Speech function
+        function speakGerman(text, rate = 1) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = rate;
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Sorry, your browser does not support speech synthesis');
+            }
+        }
+
+        // Speech recognition setup - support multiple browsers
+        let recognition;
+        let isRecognitionSupported = false;
+
+        function initSpeechRecognition() {
+            // Check different browsers' speech recognition support
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+                isRecognitionSupported = true;
+            } else if ('SpeechRecognition' in window) {
+                recognition = new SpeechRecognition();
+                isRecognitionSupported = true;
+            }
+
+            if (isRecognitionSupported) {
+                recognition.lang = 'de-DE';
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                
+                console.log('Speech recognition initialized');
+            } else {
+                console.log('Browser does not support speech recognition');
+            }
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Initialize current tab exercises
+            initCurrentTab();
+        }
+
+        // Initialize current tab
+        function initCurrentTab() {
+            switch(currentTab) {
+                case 'reading':
+                    initReadingQuestion();
+                    break;
+                case 'writing':
+                    initWritingQuestion();
+                    break;
+                case 'listening':
+                    initListeningQuestion();
+                    break;
+                case 'speaking':
+                    initSpeakingQuestion();
+                    break;
+            }
+        }
+
+        // Reading practice
+        function initReadingQuestion() {
+            const questionNum = currentQuestions.reading + 1;
+            if (questionNum > totalQuestions.reading) {
+                showCompletionMessage('reading');
+                return;
+            }
+
+            document.getElementById('reading-counter').textContent = `Question ${questionNum} / ${totalQuestions.reading}`;
+            updateProgress('reading');
+
+            const exercise = document.getElementById('reading-exercise');
+            
+            if (questionNum <= 10) {
+                // Vocabulary matching (questions 1-10)
+                const pairs = getRandomVocabulary(4);
+                const germanWords = [...pairs].sort(() => Math.random() - 0.5);
+                const chineseWords = [...pairs].sort(() => Math.random() - 0.5);
+                
+                exercise.innerHTML = `
+                    <p><strong>Choose the correct English meaning:</strong></p>
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        <span style="font-size: 1.5em; font-weight: bold; color: #1976d2;">${germanWords[0].german}</span>
+                    </div>
+                    <div class="choice-grid">
+                        ${chineseWords.map((word, index) => `
+                            <div class="choice-item" onclick="selectChoice(${index}, '${word.german === germanWords[0].german}')">
+                                ${word.chinese}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                speakGerman(germanWords[0].german);
+            } else {
+                // Reading comprehension (questions 11-15)
+                const passages = [
+                    {
+                        text: "Hallo! Ich heiße Anna und bin 13 Jahre alt. Ich wohne in Berlin mit meiner Familie. Meine Familie ist nicht groß - ich habe nur eine Mutter, einen Vater und einen kleinen Bruder. Mein Bruder ist 8 Jahre alt und sehr lustig. Wir haben auch ein Haustier, eine Katze namens Mimi.",
+                        question: "How old is Anna's brother?",
+                        options: ["8 years old", "10 years old", "13 years old"],
+                        answer: 0
+                    },
+                    {
+                        text: "In meiner Freizeit mache ich viele Aktivitäten. Ich spiele sehr gern Basketball, weil es aufregend ist. Ich höre auch gern Musik - besonders Pop und Rock. Am Wochenende gehe ich oft ins Kino mit meinen Freunden. Manchmal lese ich auch Bücher, aber nicht so oft.",
+                        question: "Why does he/she like playing basketball?",
+                        options: ["because it's easy", "because it's exciting", "because it's cheap"],
+                        answer: 1
+                    },
+                    {
+                        text: "Meine Schule ist sehr groß und modern. Ich mag die meisten Fächer, aber mein Lieblingsfach ist Deutsch. Der Deutschlehrer ist sehr freundlich und erklärt alles sehr gut. Mathe finde ich ein bisschen schwer, aber interessant. Sport macht immer Spaß!",
+                        question: "What is his/her favourite subject?",
+                        options: ["Maths", "German", "Sports"],
+                        answer: 1
+                    },
+                    {
+                        text: "Nächste Woche werde ich mit meiner Familie nach München fahren. Dort werden wir drei Tage bleiben. Wir möchten das berühmte Museum besuchen und im schönen Park spazieren gehen. Ich freue mich sehr auf diese Reise!",
+                        question: "How long will they stay in Munich?",
+                        options: ["two days", "three days", "one week"],
+                        answer: 1
+                    },
+                    {
+                        text: "Unser Klassenzimmer ist hell und freundlich. Es gibt 25 Schüler in unserer Klasse. An der Wand hängen viele bunte Poster und eine große Deutschlandkarte. Der Lehrer hat einen großen Schreibtisch und wir haben alle moderne Computer.",
+                        question: "How many students are in the class?",
+                        options: ["20", "25", "30"],
+                        answer: 1
+                    }
+                ];
+                
+                const passage = passages[(questionNum - 11) % passages.length];
+                exercise.innerHTML = `
+                    <div class="reading-text">
+                        ${passage.text}
+                    </div>
+                    <p><strong>${passage.question}</strong></p>
+                    <div class="choice-grid">
+                        ${passage.options.map((option, index) => `
+                            <div class="choice-item" onclick="selectChoice(${index}, '${index === passage.answer}')">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        // Writing practice
+        function initWritingQuestion() {
+            const questionNum = currentQuestions.writing + 1;
+            if (questionNum > totalQuestions.writing) {
+                showCompletionMessage('writing');
+                return;
+            }
+
+            document.getElementById('writing-counter').textContent = `Question ${questionNum} / ${totalQuestions.writing}`;
+            updateProgress('writing');
+
+            const exercise = document.getElementById('writing-exercise');
+            
+            if (questionNum <= 6) {
+                // Word spelling (questions 1-6)
+                const vocab = allVocabulary[Math.floor(Math.random() * allVocabulary.length)];
+                exercise.innerHTML = `
+                    <p><strong>How do you spell this word in German?</strong></p>
+                    <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; text-align: center; margin: 15px 0;">
+                        <span style="font-size: 1.5em; color: #2e7d32;">${vocab.chinese}</span>
+                    </div>
+                    <div class="input-area">
+                        <input type="text" id="writing-input" placeholder="Enter German word..." data-answer="${vocab.german}" />
+                    </div>
+                `;
+                document.getElementById('writing-input').focus();
+            } else {
+                // Grammar fill-in-the-blank (questions 7-12)
+                const grammar = grammarQuestions[Math.floor(Math.random() * grammarQuestions.length)];
+                exercise.innerHTML = `
+                    <p><strong>Choose the correct answer:</strong></p>
+                    <div style="background: #fff3e0; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                        <span style="font-size: 1.3em;">${grammar.question}</span>
+                    </div>
+                    <div class="choice-grid">
+                        ${grammar.options.map((option, index) => `
+                            <div class="choice-item" onclick="selectChoice(${index}, '${option === grammar.answer}')">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="background: #e3f2fd; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 0.9em;">
+                        <strong>Tip:</strong> ${grammar.explanation}
+                    </div>
+                `;
+            }
+        }
+
+        // Listening practice
+        function initListeningQuestion() {
+            const questionNum = currentQuestions.listening + 1;
+            if (questionNum > totalQuestions.listening) {
+                showCompletionMessage('listening');
+                return;
+            }
+
+            document.getElementById('listening-counter').textContent = `Question ${questionNum} / ${totalQuestions.listening}`;
+            updateProgress('listening');
+
+            const exercise = document.getElementById('listening-exercise');
+            const question = listeningQuestions[(questionNum - 1) % listeningQuestions.length];
+            
+            let typeLabel = '';
+            switch(question.type) {
+                case 'long_sentence': typeLabel = 'Long Sentence'; break;
+                case 'dialogue': typeLabel = 'Dialogue'; break;
+                case 'paragraph': typeLabel = 'Paragraph'; break;
+            }
+            
+            exercise.innerHTML = `
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <strong>Type:</strong> ${typeLabel}
+                </div>
+                <p><strong>Listen to the audio carefully, then answer the question:</strong></p>
+                <div class="audio-controls">
+                    <button class="btn" onclick="speakGerman(\`${question.audio}\`)">🔊 Play Audio</button>
+                    <button class="btn" onclick="speakGerman(\`${question.audio}\`, 0.8)">🔊 Slow</button>
+                    <button class="btn" onclick="speakGerman(\`${question.audio}\`, 0.6)">🔊 Very Slow</button>
+                </div>
+                <div class="listening-text" style="display: none;" id="transcript">
+                    <strong>Audio Content:</strong><br>
+                    ${question.audio}
+                </div>
+                <button class="btn" onclick="toggleTranscript()" style="margin: 10px 0;">Show/Hide Transcript</button>
+                <p style="margin-top: 20px;"><strong>${question.question}</strong></p>
+                <div class="choice-grid">
+                    ${question.options.map((option, index) => `
+                        <div class="choice-item" onclick="selectChoice(${index}, '${index === question.answer}')">
+                            ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Speaking practice
+        function initSpeakingQuestion() {
+            const questionNum = currentQuestions.speaking + 1;
+            if (questionNum > totalQuestions.speaking) {
+                showCompletionMessage('speaking');
+                return;
+            }
+
+            document.getElementById('speaking-counter').textContent = `Question ${questionNum} / ${totalQuestions.speaking}`;
+            updateProgress('speaking');
+
+            const exercise = document.getElementById('speaking-exercise');
+            const question = speakingQuestions[(questionNum - 1) % speakingQuestions.speaking.length];
+            
+            exercise.innerHTML = `
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong>Task:</strong> ${question.prompt}
+                </div>
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong>Example:</strong><br>
+                    ${question.example}
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong>Key Words:</strong> ${question.keywords.join(', ')}
+                </div>
+                
+                <!-- Main input method: Text input -->
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <strong>💭 Please respond in German:</strong>
+                    <div style="margin: 15px 0;">
+                        <textarea id="speaking-text-input" rows="3" 
+                                placeholder="Type your German response here..." 
+                                style="width: 100%; padding: 15px; border: 2px solid #4ecdc4; border-radius: 10px; font-size: 16px; resize: vertical;"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" onclick="evaluateSpeakingText()">📝 Submit Text Response</button>
+                        <button class="btn" onclick="speakGerman(document.getElementById('speaking-text-input').value || '${question.example}')">🔊 Read My Answer</button>
+                    </div>
+                </div>
+
+                <!-- Voice input (if supported) -->
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; text-align: center;">
+                    <strong>🎤 Voice Input (Optional)</strong><br>
+                    <small style="color: #666;">Requires HTTPS and microphone permission</small>
+                    <div style="margin: 10px 0;">
+                        <button class="btn" onclick="speakGerman('${question.example}')">🔊 Listen to Example</button>
+                        <button class="mic-btn" id="mic-btn" onclick="startSpeechRecognition()">🎤</button>
+                    </div>
+                </div>
+            `;
+            
+            // Auto-focus on text input
+            setTimeout(() => {
+                document.getElementById('speaking-text-input').focus();
+            }, 100);
+        }
+
+        // Evaluate text input German response
+        function evaluateSpeakingText() {
+            const input = document.getElementById('speaking-text-input').value.trim();
+            if (!input) {
+                alert('Please enter your German response');
+                return;
+            }
+            
+            // Use the same scoring system
+            const evaluation = evaluateSpeech(input, currentQuestions.speaking);
+            
+            if (evaluation.shouldGivePoint) {
+                scores.speaking++;
+            }
+            
+            // Show detailed feedback
+            const feedback = document.getElementById('speaking-feedback');
+            feedback.innerHTML = `
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid ${evaluation.color};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong style="font-size: 1.2em;">📝 Text Evaluation Result</strong>
+                        <span style="background: ${evaluation.color}; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">
+                            ${evaluation.score}/${evaluation.maxScore} - ${evaluation.grade}
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <strong>Your Answer:</strong> 
+                        <span style="background: #e8f5e8; padding: 5px 10px; border-radius: 5px; font-style: italic;">${input}</span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <div style="background: #f0f0f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: ${evaluation.color}; height: 100%; width: ${evaluation.score}%; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.9em; line-height: 1.6;">
+                        ${evaluation.feedback.map(item => `<div style="margin: 5px 0;">${item}</div>`).join('')}
+                    </div>
+                    ${evaluation.shouldGivePoint ? 
+                        '<div style="color: #4CAF50; font-weight: bold; margin-top: 10px;">🎉 Earned practice points!</div>' : 
+                        '<div style="color: #FF9800; font-weight: bold; margin-top: 10px;">💪 Keep trying for a higher score!</div>'
+                    }
+                    <div style="margin-top: 15px; padding: 10px; background: #f0f8ff; border-radius: 5px; font-size: 0.9em;">
+                        💡 <strong>Pronunciation Practice:</strong> Click the "🔊 Read My Answer" button above to hear how your German sounds!
+                    </div>
+                </div>
+            `;
+            
+            updateScore('speaking');
+            updateOverallProgress();
+        }
+
+        // Advanced speaking evaluation system
+        function evaluateSpeech(speechResult, questionIndex) {
+            const question = speakingQuestions[questionIndex % speakingQuestions.length];
+            let score = 0;
+            let maxScore = 100;
+            let feedback = [];
+            
+            // 1. Keyword check (40 points)
+            const keywordCount = question.keywords.filter(keyword => 
+                speechResult.toLowerCase().includes(keyword.toLowerCase())
+            ).length;
+            const keywordScore = Math.min(40, (keywordCount / question.keywords.length) * 40);
+            score += keywordScore;
+            
+            if (keywordCount > 0) {
+                feedback.push(`✅ Used ${keywordCount}/${question.keywords.length} key words`);
+            } else {
+                feedback.push(`❌ Try to use more key words: ${question.keywords.join(', ')}`);
+            }
+            
+            // 2. Length assessment (20 points)
+            const wordCount = speechResult.split(' ').length;
+            let lengthScore = 0;
+            if (wordCount >= 8) lengthScore = 20;
+            else if (wordCount >= 5) lengthScore = 15;
+            else if (wordCount >= 3) lengthScore = 10;
+            else lengthScore = 5;
+            score += lengthScore;
+            
+            feedback.push(`📏 Sentence length: ${wordCount} words (${lengthScore}/20 points)`);
+            
+            // 3. Basic sentence pattern check (25 points)
+            const patterns = {
+                self_introduction: ['ich', 'heiße|bin'],
+                family: ['ich habe|meine|mein'],
+                hobbies: ['ich spiele|ich höre|gern'],
+                school: ['lieblingsfach|mag|ist'],
+                pets: ['hund|katze|haustier'],
+                daily_routine: ['ich gehe|mache'],
+                future_plans: ['werde|möchte'],
+                preferences: ['mag|liebe|finde']
+            };
+            
+            const currentPattern = patterns[question.type];
+            let patternScore = 0;
+            if (currentPattern) {
+                const hasPattern = currentPattern.some(pattern => {
+                    const regex = new RegExp(pattern, 'i');
+                    return regex.test(speechResult);
+                });
+                if (hasPattern) {
+                    patternScore = 25;
+                    feedback.push(`✅ Used correct sentence structure`);
+                } else {
+                    feedback.push(`💡 Suggested pattern: ${question.example}`);
+                }
+            }
+            score += patternScore;
+            
+            // 4. German vocabulary recognition (15 points)
+            const germanWords = allVocabulary.map(v => v.german.toLowerCase());
+            const detectedGermanWords = speechResult.toLowerCase().split(' ').filter(word => 
+                germanWords.includes(word) || germanWords.some(gw => gw.includes(word))
+            );
+            const germanScore = Math.min(15, detectedGermanWords.length * 3);
+            score += germanScore;
+            
+            if (detectedGermanWords.length > 0) {
+                feedback.push(`🇩🇪 Detected German words: ${detectedGermanWords.join(', ')}`);
+            } else {
+                feedback.push(`💭 Try to use more German words`);
+            }
+            
+            // Grading system
+            let grade = '';
+            let color = '';
+            if (score >= 80) { grade = 'Excellent (A)'; color = '#4CAF50'; }
+            else if (score >= 65) { grade = 'Good (B)'; color = '#2196F3'; }
+            else if (score >= 50) { grade = 'Pass (C)'; color = '#FF9800'; }
+            else { grade = 'Needs Improvement (D)'; color = '#f44336'; }
+            
+            return {
+                score: score,
+                maxScore: maxScore,
+                grade: grade,
+                color: color,
+                feedback: feedback,
+                shouldGivePoint: score >= 50  // Give practice points for 50+ score
+            };
+        }
+
+        // Speech recognition function - improved version
+        function startSpeechRecognition() {
+            console.log('Starting speech recognition...');
+            
+            // Check browser support
+            if (!isRecognitionSupported) {
+                showSpeechError('Your browser does not support speech recognition', 'Please use Chrome, Edge or Safari');
+                return;
+            }
+
+            // Check HTTPS or localhost
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                showSpeechError('Speech recognition requires secure connection', 'Please ensure the website uses HTTPS protocol');
+                return;
+            }
+
+            const micBtn = document.getElementById('mic-btn');
+            if (!micBtn) {
+                showSpeechError('Microphone button not found', 'Please refresh the page');
+                return;
+            }
+
+            // Set microphone status
+            micBtn.classList.add('listening');
+            
+            // Show instructions
+            document.getElementById('speech-result').innerHTML = `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
+                    <strong>🎤 Listening to speech...</strong><br>
+                    <small>Please allow microphone permission and start speaking</small>
+                </div>
+            `;
+            
+            try {
+                recognition.start();
+                console.log('Speech recognition started');
+            } catch (error) {
+                console.error('Error starting speech recognition:', error);
+                micBtn.classList.remove('listening');
+                showSpeechError('Cannot start speech recognition', error.message);
+                return;
+            }
+            
+            // Set result handling
+            recognition.onresult = function(event) {
+                console.log('Speech recognition result received');
+                const speechResult = event.results[0][0].transcript;
+                const confidence = event.results[0][0].confidence;
+                
+                console.log('Recognition result:', speechResult, 'Confidence:', confidence);
+                
+                // Show recognition result
+                document.getElementById('speech-result').innerHTML = `
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                        <strong>Speech Recognition Result:</strong> ${speechResult}<br>
+                        <small style="color: #666;">Confidence: ${Math.round(confidence * 100)}%</small>
+                    </div>
+                `;
+                
+                // Advanced evaluation
+                const evaluation = evaluateSpeech(speechResult, currentQuestions.speaking);
+                
+                // Update score
+                if (evaluation.shouldGivePoint) {
+                    scores.speaking++;
+                }
+                
+                // Show detailed feedback
+                const feedback = document.getElementById('speaking-feedback');
+                feedback.innerHTML = `
+                    <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid ${evaluation.color};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <strong style="font-size: 1.2em;">Evaluation Result</strong>
+                            <span style="background: ${evaluation.color}; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">
+                                ${evaluation.score}/${evaluation.maxScore} - ${evaluation.grade}
+                            </span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="background: #f0f0f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: ${evaluation.color}; height: 100%; width: ${evaluation.score}%; transition: width 0.5s ease;"></div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.9em; line-height: 1.6;">
+                            ${evaluation.feedback.map(item => `<div style="margin: 5px 0;">${item}</div>`).join('')}
+                        </div>
+                        ${evaluation.shouldGivePoint ? 
+                            '<div style="color: #4CAF50; font-weight: bold; margin-top: 10px;">🎉 Earned practice points!</div>' : 
+                            '<div style="color: #FF9800; font-weight: bold; margin-top: 10px;">💪 Keep trying for a higher score!</div>'
+                        }
+                    </div>
+                `;
+                
+                updateScore('speaking');
+                updateOverallProgress();
+                micBtn.classList.remove('listening');
+            };
+            
+            // Error handling
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                micBtn.classList.remove('listening');
+                
+                let errorMessage = 'Speech recognition error occurred';
+                let suggestion = 'Please try again';
+                
+                switch(event.error) {
+                    case 'not-allowed':
+                        errorMessage = 'Microphone permission denied';
+                        suggestion = 'Please allow website to use microphone, then refresh the page';
+                        break;
+                    case 'no-speech':
+                        errorMessage = 'No speech detected';
+                        suggestion = 'Please ensure microphone is working and speak louder';
+                        break;
+                    case 'audio-capture':
+                        errorMessage = 'Cannot capture audio';
+                        suggestion = 'Please check if microphone is connected and working';
+                        break;
+                    case 'network':
+                        errorMessage = 'Network connection problem';
+                        suggestion = 'Please check network connection and retry';
+                        break;
+                    case 'aborted':
+                        errorMessage = 'Speech recognition was interrupted';
+                        suggestion = 'Please click the microphone button again';
+                        break;
+                }
+                
+                showSpeechError(errorMessage, suggestion);
+            };
+            
+            // End handling
+            recognition.onend = function() {
+                console.log('Speech recognition ended');
+                micBtn.classList.remove('listening');
+            };
+        }
+
+        // Show speech error message
+        function showSpeechError(title, message) {
+            document.getElementById('speech-result').innerHTML = `
+                <div style="background: #ffebee; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #f44336;">
+                    <strong style="color: #c62828;">❌ ${title}</strong><br>
+                    <div style="margin-top: 5px; color: #666; font-size: 0.9em;">${message}</div>
+                </div>
+            `;
+            
+            const feedback = document.getElementById('speaking-feedback');
+            feedback.innerHTML = `
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong>💡 Alternative Options:</strong><br>
+                    <div style="margin-top: 10px;">
+                        <button class="btn" onclick="skipSpeechExercise()">Skip Speech Exercise</button>
+                        <button class="btn" onclick="showManualInput()">Manual Input</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Skip speech exercise
+        function skipSpeechExercise() {
+            scores.speaking++; // Give points
+            document.getElementById('speaking-feedback').innerHTML = `
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong>✅ Question Skipped</strong><br>
+                    <small>Due to technical issues, points have been automatically awarded</small>
+                </div>
+            `;
+            updateScore('speaking');
+            updateOverallProgress();
+        }
+
+        // Manual input
+        function showManualInput() {
+            const question = speakingQuestions[(currentQuestions.speaking) % speakingQuestions.length];
+            document.getElementById('speech-result').innerHTML = `
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <strong>Manual Input Mode:</strong><br>
+                    <div style="margin: 10px 0;">
+                        <textarea id="manual-speech-input" rows="3" placeholder="Please enter your German response..." 
+                                style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 5px;"></textarea>
+                    </div>
+                    <button class="btn" onclick="evaluateManualInput()">Submit Answer</button>
+                </div>
+            `;
+        }
+
+        // Evaluate manual input
+        function evaluateManualInput() {
+            const input = document.getElementById('manual-speech-input').value.trim();
+            if (!input) {
+                alert('Please enter your German response');
+                return;
+            }
+            
+            // Use the same scoring system
+            const evaluation = evaluateSpeech(input, currentQuestions.speaking);
+            
+            if (evaluation.shouldGivePoint) {
+                scores.speaking++;
+            }
+            
+            // Show evaluation result
+            const feedback = document.getElementById('speaking-feedback');
+            feedback.innerHTML = `
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid ${evaluation.color};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong style="font-size: 1.2em;">Evaluation Result</strong>
+                        <span style="background: ${evaluation.color}; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">
+                            ${evaluation.score}/${evaluation.maxScore} - ${evaluation.grade}
+                        </span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <div style="background: #f0f0f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: ${evaluation.color}; height: 100%; width: ${evaluation.score}%; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.9em; line-height: 1.6;">
+                        ${evaluation.feedback.map(item => `<div style="margin: 5px 0;">${item}</div>`).join('')}
+                    </div>
+                    ${evaluation.shouldGivePoint ? 
+                        '<div style="color: #4CAF50; font-weight: bold; margin-top: 10px;">🎉 Earned practice points!</div>' : 
+                        '<div style="color: #FF9800; font-weight: bold; margin-top: 10px;">💪 Keep trying for a higher score!</div>'
+                    }
+                </div>
+            `;
+            
+            updateScore('speaking');
+            updateOverallProgress();
+        }
+
+        // Select answer
+        function selectChoice(index, isCorrect) {
+            // Remove previous selection
+            document.querySelectorAll('.choice-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Mark new selection
+            event.target.classList.add('selected');
+            selectedAnswer = {index: index, correct: isCorrect === 'true'};
+        }
+
+        // Check answer
+        function checkAnswer(section) {
+            if (!selectedAnswer) {
+                alert('Please select an answer first!');
+                return false;
+            }
+            
+            const feedback = document.getElementById(`${section}-feedback`);
+            if (selectedAnswer.correct) {
+                scores[section]++;
+                feedback.innerHTML = '<div class="feedback correct">Correct! Well done! 🎉</div>';
+            } else {
+                feedback.innerHTML = '<div class="feedback incorrect">Incorrect, try again!</div>';
+            }
+            
+            updateScore(section);
+            updateOverallProgress();
+            selectedAnswer = null;
+            
+            return true;
+        }
+
+        // Next question functions
+        function nextReadingQuestion() {
+            if (document.querySelector('.choice-item.selected') && checkAnswer('reading')) {
+                currentQuestions.reading++;
+                setTimeout(() => {
+                    initReadingQuestion();
+                    document.getElementById('reading-feedback').innerHTML = '';
+                }, 1000);
+            } else if (!document.querySelector('.choice-item.selected')) {
+                alert('Please select an answer first!');
+            }
+        }
+
+        function checkWritingAnswer() {
+            const input = document.getElementById('writing-input');
+            if (input) {
+                // Spelling question
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.answer;
+                const feedback = document.getElementById('writing-feedback');
+                
+                if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                    scores.writing++;
+                    feedback.innerHTML = '<div class="feedback correct">Correct spelling! 🎉</div>';
+                } else {
+                    feedback.innerHTML = `<div class="feedback incorrect">Correct answer is: ${correctAnswer}</div>`;
+                }
+                updateScore('writing');
+                updateOverallProgress();
+            } else {
+                // Multiple choice question
+                checkAnswer('writing');
+            }
+        }
+
+        function nextWritingQuestion() {
+            currentQuestions.writing++;
+            setTimeout(() => {
+                initWritingQuestion();
+                document.getElementById('writing-feedback').innerHTML = '';
+            }, 1000);
+        }
+
+        function checkListeningAnswer() {
+            if (document.querySelector('.choice-item.selected') && checkAnswer('listening')) {
+                // Answer already checked
+            } else if (!document.querySelector('.choice-item.selected')) {
+                alert('Please select an answer first!');
+            }
+        }
+
+        function nextListeningQuestion() {
+            if (document.querySelector('.choice-item.selected')) {
+                currentQuestions.listening++;
+                setTimeout(() => {
+                    initListeningQuestion();
+                    document.getElementById('listening-feedback').innerHTML = '';
+                }, 1000);
+            } else {
+                alert('Please select an answer first!');
+            }
+        }
+
+        function nextSpeakingQuestion() {
+            currentQuestions.speaking++;
+            setTimeout(() => {
+                initSpeakingQuestion();
+                document.getElementById('speaking-feedback').innerHTML = '';
+                document.getElementById('speech-result').innerHTML = '';
+            }, 500);
+        }
+
+        // Helper functions
+        function getRandomVocabulary(count) {
+            const shuffled = [...allVocabulary].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        function updateProgress(section) {
+            const progress = (currentQuestions[section] / totalQuestions[section]) * 100;
+            document.getElementById(`${section}-progress`).style.width = progress + '%';
+        }
+
+        function updateScore(section) {
+            document.getElementById(`${section}-score`).textContent = 
+                `Score: ${scores[section]}/${totalQuestions[section]}`;
+        }
+
+        function updateOverallProgress() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            const totalQuestionsCompleted = Object.values(currentQuestions).reduce((a, b) => a + b, 0);
+            const totalPossible = Object.values(totalQuestions).reduce((a, b) => a + b, 0);
+            const accuracy = totalQuestionsCompleted > 0 ? Math.round((totalScore / totalQuestionsCompleted) * 100) : 0;
+            const timeSpent = Math.floor((Date.now() - startTime) / 60000);
+            
+            document.getElementById('total-score').textContent = totalScore;
+            document.getElementById('total-questions').textContent = totalQuestionsCompleted;
+            document.getElementById('time-spent').textContent = timeSpent;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+        }
+
+        function showCompletionMessage(section) {
+            const sectionNames = {
+                reading: 'Reading',
+                writing: 'Writing', 
+                listening: 'Listening',
+                speaking: 'Speaking'
+            };
+            
+            document.getElementById(`${section}-exercise`).innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h2>🎉 ${sectionNames[section]} Practice Completed!</h2>
+                    <p style="margin: 20px 0; font-size: 1.2em;">
+                        Score: ${scores[section]}/${totalQuestions[section]} 
+                        (${Math.round((scores[section]/totalQuestions[section])*100)}%)
+                    </p>
+                    <p>You can switch to other practice sections to continue learning!</p>
+                </div>
+            `;
+        }
+
+        function toggleTranscript() {
+            const transcript = document.getElementById('transcript');
+            if (transcript.style.display === 'none') {
+                transcript.style.display = 'block';
+            } else {
+                transcript.style.display = 'none';
+            }
+        }
+
+        function resetReading() {
+            currentQuestions.reading = 0;
+            scores.reading = 0;
+            updateScore('reading');
+            initReadingQuestion();
+            document.getElementById('reading-feedback').innerHTML = '';
+        }
+
+        function resetSpeaking() {
+            currentQuestions.speaking = 0;
+            scores.speaking = 0;
+            updateScore('speaking');
+            initSpeakingQuestion();
+            document.getElementById('speaking-feedback').innerHTML = '';
+            document.getElementById('speech-result').innerHTML = '';
+        }
+
+        // Initialize
+        window.onload = function() {
+            initSpeechRecognition(); // Initialize speech recognition
+            initReadingQuestion();
+            updateOverallProgress();
+        };
+    </script>
+</body>
+</html>
